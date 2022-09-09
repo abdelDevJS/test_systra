@@ -37,7 +37,7 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     }
 
     while (queue.length) {
-      var cell = queue.pop(),
+      let cell = queue.pop(),
         value = matrix[cell.y][cell.x];
       console.log("QUE IN LOOP ==>", cell);
       // Add neighbors of the same value to the queue
@@ -48,7 +48,7 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     }
 
     // Cache the size for all visited cells for performances
-    for (var key in visited) {
+    for (let key in visited) {
       cache[key] = size;
     }
     return size;
@@ -62,13 +62,13 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     }
     return coordinatesArray;
   }
-  var max = 0;
+  let max = 0;
   let colorValue = 0;
-  for (var y = 0; y < matrix.length; ++y) {
-    for (var x = 0; x < matrix[y].length; ++x) {
+  for (let y = 0; y < matrix.length; ++y) {
+    for (let x = 0; x < matrix[y].length; ++x) {
       console.log("CACHE==>", cache);
       if (!cache[x + " " + y]) {
-        var size = pulse(x, y);
+        let size = pulse(x, y);
         if (size > max) {
           max = size;
           colorValue = matrix[y][x];
