@@ -40,7 +40,6 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     while (queue.length) {
       let cell = queue.pop(),
         value = matrix[cell.y][cell.x];
-      console.log("QUE IN LOOP ==>", cell);
       // Add neighbors of the same value to the queue
       test(cell.x - 1, cell.y, value);
       test(cell.x + 1, cell.y, value);
@@ -66,7 +65,6 @@ export default function LargestAreaMatrix(matrix: number[][]) {
   }
   for (let y = 0; y < matrix.length; ++y) {
     for (let x = 0; x < matrix[y].length; ++x) {
-      console.log("CACHE==>", cache);
       if (!cache[x + " " + y]) {
         let size = pulse(x, y);
         if (size > max) {
