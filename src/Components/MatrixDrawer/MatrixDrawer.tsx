@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
+import InputNumber from "../InputNumber";
 import "./Matrix.style.css";
 import LargestAreaMatrix from "../../utils/LargestAreaMatrix";
 function MatrixDrawer() {
@@ -28,13 +28,14 @@ function MatrixDrawer() {
     console.log("return of area service", LargestAreaMatrix(matrix));
     setCoordArray(coord);
   };
-  useEffect(() => {
-    readyToDraw ? getMaxAreaCoord() : console.log("triggered");
-  }, 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [matrix,readyToDraw]);
+  useEffect(
+    () => {
+      readyToDraw ? getMaxAreaCoord() : console.log("triggered");
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [matrix, readyToDraw]
+  );
 
-  
   const createAndFillMatrix = (
     width: number,
     height: number,
@@ -97,37 +98,29 @@ function MatrixDrawer() {
     setPossibleColors(possibleColors);
   };
   return (
-    <div>
+    <React.Fragment>
       <div className="input-block">
         <div>
-          set Width:{" "}
-          <TextField
-            value={width}
-            type="number"
-            onChange={(e) => handleWidth(e)}
-          />
+          set Width: <InputNumber onChange={handleWidth} value={width} />
         </div>
         <div>
-          set height:{" "}
-          <TextField
-            value={height}
-            type="number"
-            onChange={(e) => handleHeight(e)}
-          />
+          set height: <InputNumber onChange={handleHeight} value={height} />
         </div>
         <div>
           Possible colors:{" "}
-          <TextField
-            value={possibleColors}
-            type="number"
-            onChange={(e) => handlePossibleColors(e)}
-          />
+          <InputNumber onChange={handlePossibleColors} value={possibleColors} />
         </div>
       </div>
-      <Button className="button-margin-bottom" variant="contained" onClick={() => handleCalculateButton()}>Draw square</Button>
-      
-        {readyToDraw && (
-          <div className="box-container">
+      <Button
+        className="button-margin-bottom"
+        variant="contained"
+        onClick={() => handleCalculateButton()}
+      >
+        Draw square
+      </Button>
+
+      {readyToDraw && (
+        <div className="box-container">
           <React.Fragment>
             {matrix.map((item, idx) => (
               <tr key={idx} className="square">
@@ -148,10 +141,9 @@ function MatrixDrawer() {
               </tr>
             ))}
           </React.Fragment>
-          </div>
-        )}
-      
-    </div>
+        </div>
+      )}
+    </React.Fragment>
   );
 }
 
