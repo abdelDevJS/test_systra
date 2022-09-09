@@ -13,5 +13,17 @@
   border: 1px solid white;
 }
 .square-selected-brd {
-    border: 1.5px solid red;
-  }
+  border: 1px solid red;
+}
+.input-block {
+    display: flex;
+    margin-top:4%;
+    margin-bottom: 2%;
+}
+.box-container{
+    border: 3px solid;
+    padding: 1px;
+}
+.button-margin-bottom{
+    margin-bottom:2% !important;
+}

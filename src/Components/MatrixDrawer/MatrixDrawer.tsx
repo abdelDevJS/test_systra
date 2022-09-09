@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Square from "../Square/Square";
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button'
 import "./Matrix.style.css";
 import LargestAreaMatrix from "../../utils/LargestAreaMatrix";
 function MatrixDrawer() {
@@ -68,37 +69,62 @@ function MatrixDrawer() {
     setColorsList(colorsList);
     return colorsList;
   };
-
+  const handleWidth = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const inputWidth = parseInt(e.target.value);
+    const width = !inputWidth && inputWidth !== 0 ? 0 : inputWidth;
+    setWidth(width);
+  };
+  const handleHeight = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const inputHeight = parseInt(e.target.value);
+    const height = !inputHeight && inputHeight !== 0 ? 0 : inputHeight;
+    setHeight(height);
+  };
+  const handlePossibleColors = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const inputPossibleColors = parseInt(e.target.value);
+    const possibleColors =
+      !inputPossibleColors && inputPossibleColors !== 0
+        ? 0
+        : inputPossibleColors;
+    setPossibleColors(possibleColors);
+  };
   return (
     <div>
-      <div>
-        set Width:{" "}
-        <input
-          value={width}
-          type="number"
-          onChange={(e) => setWidth(parseInt(e.target.value))}
-        />
+      <div className="input-block">
+        <div>
+          set Width:{" "}
+          <TextField
+            value={width}
+            type="number"
+            onChange={(e) => handleWidth(e)}
+          />
+        </div>
+        <div>
+          set height:{" "}
+          <TextField
+            value={height}
+            type="number"
+            onChange={(e) => handleHeight(e)}
+          />
+        </div>
+        <div>
+          Possible colors:{" "}
+          <TextField
+            value={possibleColors}
+            type="number"
+            onChange={(e) => handlePossibleColors(e)}
+          />
+        </div>
       </div>
-      <div>
-        set height:{" "}
-        <input
-          value={height}
-          type="number"
-          onChange={(e) => setHeight(parseInt(e.target.value))}
-        />
-      </div>
-      <div>
-        Possible colors:{" "}
-        <input
-          value={possibleColors}
-          type="number"
-          onChange={(e) => setPossibleColors(parseInt(e.target.value))}
-        />
-      </div>
-
-      <button onClick={() => handleCalculateButton()}>draw</button>
-      <div>
+      <Button className="button-margin-bottom" variant="contained" onClick={() => handleCalculateButton()}>Draw square</Button>
+      
         {readyToDraw && (
+          <div className="box-container">
           <React.Fragment>
             {matrix.map((item, idx) => (
               <tr key={idx} className="square">
@@ -118,10 +144,10 @@ function MatrixDrawer() {
                 ))}
               </tr>
             ))}
-          
           </React.Fragment>
+          </div>
         )}
-      </div>
+      
     </div>
   );
 }
