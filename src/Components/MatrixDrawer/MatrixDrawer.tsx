@@ -22,16 +22,19 @@ function MatrixDrawer() {
       setReadyToDraw(false);
     }
   };
-  useEffect(() => {
-    readyToDraw ? getMaxAreaCoord() : console.log("triggered");
-  }, [matrix]);
-
   const getMaxAreaCoord = () => {
     let coord: string[] = [];
     coord = LargestAreaMatrix(matrix)?.coordinatesArray;
     console.log("return of area service", LargestAreaMatrix(matrix));
     setCoordArray(coord);
   };
+  useEffect(() => {
+    readyToDraw ? getMaxAreaCoord() : console.log("triggered");
+  }, 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [matrix,readyToDraw]);
+
+  
   const createAndFillMatrix = (
     width: number,
     height: number,
