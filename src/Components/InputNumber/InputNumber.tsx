@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler } from "react";
 
 interface searchInputProps {
   onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -7,9 +7,5 @@ interface searchInputProps {
 }
 
 export default function SquareInput({ onChange, value }: searchInputProps) {
-  return (
-    
-      <TextField value={value} type="number" onChange={onChange} />
-    
-  );
+  return <TextField value={value} type="number" onChange={onChange} />;
 }

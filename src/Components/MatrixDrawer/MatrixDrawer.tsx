@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import InputNumber from "../InputNumber";
 import "./Matrix.style.css";
 import LargestAreaMatrix from "../../utils/LargestAreaMatrix";
+import generateRandom from "../../utils/generateRandom";
 function MatrixDrawer() {
+  //States declaration
   let [width, setWidth] = useState<number>(0);
   let [height, setHeight] = useState<number>(0);
   let [possibleColors, setPossibleColors] = useState(0);
@@ -11,7 +14,9 @@ function MatrixDrawer() {
   let [matrix, setMatrix] = useState<number[][]>([]);
   let [colorsList, setColorsList] = useState<string[]>([]);
   let [coordArray, setCoordArray] = useState<string[]>([]);
+  let [biggestArea, setBiggestArea] = useState<number>();
 
+  //Function for handle the drawing method
   const handleCalculateButton = () => {
     if (width > 0 && height > 0 && possibleColors > 1) {
       setReadyToDraw(true);
@@ -22,9 +27,12 @@ function MatrixDrawer() {
       setReadyToDraw(false);
     }
   };
+  // Function to get matrix details from util function. (coordinates, maxarea, color Value )
   const getMaxAreaCoord = () => {
+    let matrixDetails = LargestAreaMatrix(matrix);
     let coord: string[] = [];
-    coord = LargestAreaMatrix(matrix)?.coordinatesArray;
+    coord = matrixDetails?.coordinatesArray;
+    setBiggestArea(matrixDetails?.max);
     console.log("return of area service", LargestAreaMatrix(matrix));
     setCoordArray(coord);
   };
@@ -36,6 +44,7 @@ function MatrixDrawer() {
     [matrix, readyToDraw]
   );
 
+  //Create 2D Array of matrix and fill each item with random color value
   const createAndFillMatrix = (
     width: number,
     height: number,
@@ -50,19 +59,16 @@ function MatrixDrawer() {
     );
     setMatrix(matrix);
   };
-  function generateRandom(maxLimit: number) {
-    let rand = Math.random() * maxLimit;
-    let random = Math.floor(rand); // 99
-    console.log(random); // say 99.81321410836433
-    return random;
-  }
 
+  //Generate random RGB color.
   const rgbRandomGenerator = () => {
     let randomValue = () => (Math.random() * 256) >> 0;
     let color = `rgb(${randomValue()}, ${randomValue()}, ${randomValue()})`;
 
     return color;
   };
+
+  //set the list of possible generated colors from possible colors number.
   const possibleColorsList = (possibleColors: number) => {
     let colorsList = [];
     for (let i = 0; i < possibleColors; i++) {
@@ -73,6 +79,8 @@ function MatrixDrawer() {
     setColorsList(colorsList);
     return colorsList;
   };
+
+  //Handle the set width input onChange.
   const handleWidth = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -80,6 +88,8 @@ function MatrixDrawer() {
     const width = !inputWidth && inputWidth !== 0 ? 0 : inputWidth;
     setWidth(width);
   };
+
+  //Handle the set height input onChange.
   const handleHeight = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -87,6 +97,8 @@ function MatrixDrawer() {
     const height = !inputHeight && inputHeight !== 0 ? 0 : inputHeight;
     setHeight(height);
   };
+
+  //Handle the possible colors onChange.
   const handlePossibleColors = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -114,7 +126,7 @@ function MatrixDrawer() {
       <Button
         className="button-margin-bottom"
         variant="contained"
-        onClick={() => handleCalculateButton()}
+        onClick={handleCalculateButton}
       >
         Draw square
       </Button>
@@ -143,6 +155,7 @@ function MatrixDrawer() {
           </React.Fragment>
         </div>
       )}
+      {readyToDraw && <Box component="span"> BIGGEST AREA: {biggestArea}</Box>}
     </React.Fragment>
   );
 }
