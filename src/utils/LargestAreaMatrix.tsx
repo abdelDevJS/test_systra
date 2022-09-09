@@ -2,6 +2,8 @@
 export default function LargestAreaMatrix(matrix: number[][]) {
   let cache: any = {};
   let coordinatesArray: string[] = [];
+  let max = 0;
+  let colorValue = 0;
   function pulse(x: number, y: number) {
     let queue: any = [],
       visited: any = {},
@@ -16,6 +18,7 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     visited[x + " " + y] = true;
     size = 1;
 
+//check if this cell was visited or not. If yes : increment size
     function test(x: number, y: number, value: number) {
       if (
         !visited[x + " " + y] &&
@@ -28,10 +31,8 @@ export default function LargestAreaMatrix(matrix: number[][]) {
         queue.push({
           x: x,
           y: y,
-        });
-        console.log("testQueue ==>", queue);
+        });      
         visited[x + " " + y] = true;
-        console.log("visited from test==> ", visited);
         size += 1;
       }
     }
@@ -39,7 +40,6 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     while (queue.length) {
       let cell = queue.pop(),
         value = matrix[cell.y][cell.x];
-      console.log("QUE IN LOOP ==>", cell);
       // Add neighbors of the same value to the queue
       test(cell.x - 1, cell.y, value);
       test(cell.x + 1, cell.y, value);
@@ -53,7 +53,8 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     }
     return size;
   }
-  function getKeysfromValue(value: number, cache: any) {
+  //Create Array of the coordinates of the biggest area
+  function getcoordinates(value: number, cache: any) {
     let coordinatesArray = [];
     for (const key in cache) {
       if (cache[key] === value) {
@@ -62,11 +63,8 @@ export default function LargestAreaMatrix(matrix: number[][]) {
     }
     return coordinatesArray;
   }
-  let max = 0;
-  let colorValue = 0;
   for (let y = 0; y < matrix.length; ++y) {
     for (let x = 0; x < matrix[y].length; ++x) {
-      console.log("CACHE==>", cache);
       if (!cache[x + " " + y]) {
         let size = pulse(x, y);
         if (size > max) {
@@ -76,7 +74,7 @@ export default function LargestAreaMatrix(matrix: number[][]) {
       }
     }
   }
-  coordinatesArray = getKeysfromValue(max, cache);
+  coordinatesArray = getcoordinates(max, cache);
   console.log(
     "Largest area size",
     max,
